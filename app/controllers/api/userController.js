@@ -3,7 +3,7 @@ import ActionError from "../../utilities/ActionError.js";
 
 const createUserAction = async (req, res) => {
   const userData = {
-    email: "binh2@gmail.com",
+    email: "binh3@gmail.com",
     name: "Phạm Quang Bình",
     password: "123123",
   };

@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import ActionError from "../utilities/ActionError.js";
 
-const validateCreateUser = (userData) => {
+const validateCreateUser = async (userData) => {
   const email = userData?.email;
   const errors = {};
 
@@ -10,7 +10,8 @@ const validateCreateUser = (userData) => {
    * Thì sẽ kiểm tra email đã tồn tại chưa
    */
   if (email) {
-    const user = User.findOne({ email });
+    const user = await User.findOne({ email });
+
     if (user) {
       errors.email = `Email ${email} already exist.`;
     }
@@ -24,7 +25,7 @@ const validateCreateUser = (userData) => {
 };
 
 const createUser = async (userData) => {
-  const validate = validateCreateUser(userData);
+  const validate = await validateCreateUser(userData);
 
   if (ActionError.is(validate)) {
     return validate;
