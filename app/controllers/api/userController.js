@@ -1,5 +1,5 @@
-const createUser = require("@/app/actions/createUser");
-const ActionError = require("@/app/utilities/ActionError");
+import createUser from "../../actions/createUser.js";
+import ActionError from "../../utilities/ActionError.js";
 
 const createUserAction = async (req, res) => {
   const userData = {
@@ -11,16 +11,19 @@ const createUserAction = async (req, res) => {
   const user = await createUser(userData);
 
   if (ActionError.is(user)) {
-    return res.json({
-      code: "action_error",
-      message: user.message,
-      errors: user.errors,
-    }, 400);
+    return res.json(
+      {
+        code: "action_error",
+        message: user.message,
+        errors: user.errors,
+      },
+      400
+    );
   }
 
   return res.json(user);
 };
 
-module.exports = {
+export default {
   createUserAction,
 };

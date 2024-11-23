@@ -1,14 +1,17 @@
-require('module-alias/register');
-require("dotenv").config();
-const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const mongoose = require("mongoose");
+import 'module-alias/register.js';
+import dotenv from 'dotenv';
+import createError from 'http-errors';
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import mongoose from 'mongoose';
 
-const indexRouter = require("./routes/index");
-const apiRouter = require("./routes/api");
+import indexRouter from './routes/index.js';
+import apiRouter from './routes/api.js';
+
+// Load biến môi trường từ .env file
+dotenv.config();
 
 const app = express();
 
@@ -19,39 +22,38 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Kết nối MongoDB thành công");
+    console.log('Kết nối MongoDB thành công');
   })
   .catch((err) => {
-    console.error("Lỗi kết nối MongoDB: ", err);
+    console.error('Lỗi kết nối MongoDB: ', err);
   });
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+// Cấu hình view engine
+app.set('views', path.join(path.dirname(''), 'views'));
+app.set('view engine', 'jade');
 
-app.use(logger("dev"));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(path.dirname(''), 'public')));
 
-app.use("/", indexRouter);
-app.use("/api", apiRouter);
+// Định nghĩa các routes
+app.use('/', indexRouter);
+app.use('/api', apiRouter);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
+// Xử lý lỗi 404 và chuyển đến error handler
+app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
+// Xử lý các lỗi khác
+app.use((err, req, res, next) => {
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render('error');
 });
 
-module.exports = app;
+export default app;

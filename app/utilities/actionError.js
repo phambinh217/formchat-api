@@ -12,4 +12,4 @@ class ActionError {
   }
 }
 
-module.exports = ActionError;
+export default ActionError;

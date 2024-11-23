@@ -1,5 +1,5 @@
-const User = require("@/app/models/User"); // Đảm bảo import đúng model User
-const ActionError = require("@/app/utilities/ActionError");
+import User from "../models/User.js";
+import ActionError from "../utilities/ActionError.js";
 
 const validateCreateUser = (userData) => {
   const email = userData?.email;
@@ -40,4 +40,4 @@ const createUser = async (userData) => {
   return user;
 };
 
-module.exports = createUser;
+export default createUser;
