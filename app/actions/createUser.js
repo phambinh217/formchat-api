@@ -1,5 +1,5 @@
-const User = require("@/app/models/user"); // Đảm bảo import đúng model User
-const ActionError = require("@/app/utilities/actionError");
+const User = require("@/app/models/User"); // Đảm bảo import đúng model User
+const ActionError = require("@/app/utilities/ActionError");
 
 const validateCreateUser = (userData) => {
   const email = userData?.email;
