@@ -1,4 +1,4 @@
-import createUser from "@/app/actions/createUser.js";
+import createUser from "../../actions/createUser.js";
 import ActionError from "../../utilities/ActionError.js";
 
 const createUserAction = async (req, res) => {
